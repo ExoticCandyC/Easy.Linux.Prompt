@@ -10,15 +10,15 @@ set(TARGET_NAME  "ec-elp")
 
     #uncomment to select "GNU Compiler Collection" as your compiler
     #set(CMAKE_C_COMPILER            gcc)
+    #set(COMPILER_IN_USE           "GCC")
 
     #uncomment to select "LLVM CLang C compiler" as your compiler
-    #set(CMAKE_C_COMPILER            clang)
+    set(CMAKE_C_COMPILER            clang)
+    #set(COMPILER_IN_USE           "CLANG")
 
     #uncomment to select "Intel C Compiler" as your compiler
     #set(CMAKE_C_COMPILER            icc)
-
-    #uncomment to select "Tiny C Compiler" as your compiler
-    #set(CMAKE_C_COMPILER            tcc)
+    #set(COMPILER_IN_USE           "ICC")
 
 #set(CMAKE_C_STANDARD            89)
 set(CMAKE_C_STANDARD_REQUIRED   ON)
@@ -45,7 +45,8 @@ add_compile_options("-O3")
 
 add_compile_options("-static")
 
-add_compile_options("-ansi")
+#add_compile_options("-ansi")
+add_compile_options("-std=c89")
 add_compile_options("-Wall")
 add_compile_options("-Wextra")
 add_compile_options("-pedantic")
@@ -59,11 +60,13 @@ add_compile_options("-Wconversion")
 add_compile_options("-Wfloat-equal")
 add_compile_options("-Wswitch-enum")
 add_compile_options("-Wunused-macros")
-add_compile_options("-Wduplicated-cond")
 add_compile_options("-fstack-protector")
+if(${COMPILER_IN_USE} MATCHES "GCC")
+add_compile_options("-Wduplicated-cond")
 add_compile_options("-Wduplicated-branches")
 add_compile_options("-ftree-loop-vectorize")
 add_compile_options("-Waggressive-loop-optimizations")
+endif()
 
 add_compile_options("-fPIC")
 add_compile_options("-flto")
@@ -80,7 +83,8 @@ add_link_options("-O3")
 
 add_link_options("-static")
 
-add_link_options("-ansi")
+#add_link_options("-ansi")
+add_compile_options("-std=c89")
 add_link_options("-Wall")
 add_link_options("-Wextra")
 add_link_options("-pedantic")
@@ -94,11 +98,13 @@ add_link_options("-Wconversion")
 add_link_options("-Wfloat-equal")
 add_link_options("-Wswitch-enum")
 add_link_options("-Wunused-macros")
-add_link_options("-Wduplicated-cond")
 add_link_options("-fstack-protector")
-add_link_options("-Wduplicated-branches")
+if(${COMPILER_IN_USE} MATCHES "GCC")
+add_link_options("-Wduplicated-cond")
 add_link_options("-ftree-loop-vectorize")
+add_link_options("-Wduplicated-branches")
 add_link_options("-Waggressive-loop-optimizations")
+endif()
 
 add_link_options("-fPIC")
 add_link_options("-flto")

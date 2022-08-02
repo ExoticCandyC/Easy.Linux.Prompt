@@ -22,8 +22,8 @@ extern "C"
 #define __cold
 #define __hot
 #else
-#define constructor     __attribute__((constructor))
-#define destructor      __attribute__((destructor))
+#define constructor   __attribute__((constructor))
+#define destructor    __attribute__((destructor))
 #define __cold          __attribute__((cold))
 #define __hot           __attribute__((hot))
 #endif

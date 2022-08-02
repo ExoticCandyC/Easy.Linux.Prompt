@@ -29,13 +29,26 @@ extern "C"
 #endif
 
 #include <stdlib.h>
+#include "compiler.port/Attributes.h"
 #include "compiler.port/Data_Types.h"
 #include "POSIX/Ansi_Sequences.h"
 #include "POSIX/POSIX.h"
 #include "Parse/Argv.h"
-
-
+#include "database/database.h"
 #include "database/emoji.h"
+
+
+constructor void before_main(void)
+{
+    printf("size = %d\r\n", (int)sizeof(ec_elp_profiles));
+    printf ("\r\nBefore main()\r\n");
+}
+
+destructor void after_main(void)
+{
+    free(ec_elp_profiles);
+    printf ("\r\nAfter main()\r\n");
+}
 
 int project_main(int argc, string_t *argv[])
 {
@@ -43,6 +56,7 @@ int project_main(int argc, string_t *argv[])
     emoji_t emoji;
     ecapi_parse_argv(argc, argv);
     ecio_load_tty_name();
+    ec_elp_profiles = (ec_elp_profile *)malloc(sizeof(ec_elp_profiles) * 5);
 
     emojicpy(candy, emoji_candy2);
     ec_elp_analogue_clock_now(emoji);

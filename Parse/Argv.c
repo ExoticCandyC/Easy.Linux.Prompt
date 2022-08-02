@@ -125,7 +125,7 @@ void ecapi_parse_argv(int argc, string_t *argv[])
     EPL_Argv argIndex;
     for(index = 1; index < (uint8_t)argc; index++)
     {
-        argIndex = ecapi_parse_arg(argv[index], EPL_ARGV_Long_Options,
+        argIndex = (EPL_Argv)ecapi_parse_arg(argv[index], EPL_ARGV_Long_Options,
                                   EPL_ARGV_Short_Options, (size_t)epl_argv_max);
         switch(argIndex)
         {

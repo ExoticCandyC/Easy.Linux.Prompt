@@ -29,6 +29,8 @@ int  ec_epl_max_rows        = -1;
 BOOL ec_epl_auto_matrix     = false;
 BOOL ec_epl_fill_matrix     = false;
 
+ec_elp_profile *ec_elp_profiles = EC_NULL;
+
 void ec_elp_reset_profile(ec_elp_profile *ptr)
 {
     ec_elp_users index = (ec_elp_users)0;

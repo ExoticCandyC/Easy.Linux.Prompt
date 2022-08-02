@@ -62,6 +62,8 @@ typedef struct
     } user_profile[ec_elp_user_max];
 } ec_elp_profile;
 
+extern ec_elp_profile *ec_elp_profiles;
+
 void ec_elp_reset_profile(ec_elp_profile *ptr);
 
 #ifdef __cplusplus

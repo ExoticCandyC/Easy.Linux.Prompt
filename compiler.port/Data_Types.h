@@ -113,6 +113,8 @@ typedef enum
     Color_Name_White
 } Color_Names;
 
+#define EC_NULL ((void *)0)
+
 #define Font_Weight_Normal 0
 #define Font_Weight_Bold   1
 
