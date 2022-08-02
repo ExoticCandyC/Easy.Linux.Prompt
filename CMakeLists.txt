@@ -1,7 +1,9 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_NAME "Easy.Linux.Prompt")
+set(PROJECT_NAME               "Easy.Linux.Prompt")
+set(PROJECT_NAME_USER_FRIENDLY "Easy Linux Prompt")
+set(PROJECT_VERSION_STR        "1.0.0a")
 set(TARGET_NAME  "ec-elp")
 
 #compiler is free to be anything and any version
@@ -65,6 +67,12 @@ add_compile_options("-Waggressive-loop-optimizations")
 
 add_compile_options("-fPIC")
 add_compile_options("-flto")
+
+################################################################################
+
+add_compile_options("-DSTRINGIZE(x)=#x")
+add_compile_options("-DECAPI_PROJECT_NAME=STRINGIZE(${PROJECT_NAME_USER_FRIENDLY})")
+add_compile_options("-DECAPI_PROJECT_VERSION=STRINGIZE(${PROJECT_VERSION_STR})")
 
 ################################################################################
 

@@ -80,6 +80,24 @@ void ecapi_print_help(size_t opt_count,
            end_line()
            "<https://github.com/ExoticCandyC/Easy.Linux.Prompt/issues>."
            end_line());
+    exit(0);
+}
+
+#ifdef EXOTIC_CANDY_PRIVATE_API
+weak
+#endif
+void ecapi_print_version()
+{
+    string_t date[] = __DATE__;
+    iterator_t(string_t) year = date + strlen(date) - 4;
+    printf("ec-elp (" ECAPI_PROJECT_NAME ") " ECAPI_PROJECT_VERSION end_line());
+    printf("Copyright (C) " printf_string() " https://github.com/ExoticCandyC"
+                             end_line(), year);
+    ecio_print_confined_text("This is free software; see the source for copying"
+                             " conditions. There is NO warranty; not even for "
+                             "MERCHANTABILITY or FITNESS FOR A PARTICULAR "
+                             "PURPOSE." end_line(), 0, ecio_terminal_columns());
+    exit(0);
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
@@ -115,9 +133,10 @@ void ecapi_parse_argv(int argc, string_t *argv[])
                 ecapi_print_help((size_t)epl_argv_max, EPL_ARGV_Long_Options,
                                                        EPL_ARGV_Short_Options,
                                                        EPL_ARGV_Descriptions);
-                exit(0);
                 break;
             case epl_argv_version:
+                ecapi_print_version();
+                break;
             case epl_argv_config:
             case epl_argv_profile:
             case epl_argv_rows:
