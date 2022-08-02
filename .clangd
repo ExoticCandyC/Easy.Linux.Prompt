@@ -1,0 +1,16 @@
+
+
+Hover:
+  ShowAKA: Yes
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    CheckOptions:
+      readability-identifier-naming.VariableCase: CamelCase
+
+CompileFlags:
+  Add: [-O3, -static, -ansi, -Wall, -Wextra, -pedantic, -Wpedantic, -Wundef, -Werror, -Wshadow, -Wcast-qual, -Wconversion, -Wfloat-equal, -Wswitch-enum, -Wunused-macros, -Wduplicated-cond, -fstack-protector, -Wduplicated-branches, -ftree-loop-vectorize, -Waggressive-loop-optimizations, -fPIC, -flto, -Wno-shorten-64-to-32]
+  Remove: [-mlongcalls]
+  Compiler: clang
+
+  
