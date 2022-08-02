@@ -75,6 +75,11 @@ void ecapi_print_help(size_t opt_count,
                                              short_opt[index], long_opt[index]);
         ecio_print_confined_text(descriptions[index], offset, max_len);
     }
+    printf(end_line()
+           "For bug reporting instructions, please see:"
+           end_line()
+           "<https://github.com/ExoticCandyC/Easy.Linux.Prompt/issues>."
+           end_line());
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
