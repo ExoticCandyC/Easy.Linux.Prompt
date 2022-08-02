@@ -18,6 +18,7 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <time.h>
 #ifndef __linux__
 #error "This project is targeted to be run ONLY on GNU Linux based operating systems."
 #endif
@@ -33,10 +34,23 @@ extern "C"
 #include "POSIX/POSIX.h"
 #include "Parse/Argv.h"
 
+
+#include "database/emoji.h"
+
 int project_main(int argc, string_t *argv[])
 {
+    emoji_t candy;
+    emoji_t emoji;
     ecapi_parse_argv(argc, argv);
     ecio_load_tty_name();
+
+    emojicpy(candy, emoji_candy2);
+    ec_elp_analogue_clock_now(emoji);
+
+    printf("Time  = " printf_emoji() end_line(), emoji);
+    printf("Candy = " printf_emoji() end_line(), candy);
+    printf("Size of color code = %d\r\n", (int)sizeof(color_text_magenta()));
+    printf("Size of emoji      = %d\r\n", (int)sizeof(candy));
 
     printf("Some random text " printf_int(1,1) " " printf_int(1,1) " " printf_int(1,1) end_line(), 1, 2, 3);
 

@@ -20,6 +20,7 @@
 #pragma once
 
 #include "../compiler.port/Data_Types.h"
+#include "../POSIX/Ansi_Sequences.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -31,6 +32,43 @@ extern int  ec_epl_max_rows;
 extern BOOL ec_epl_auto_matrix;
 extern BOOL ec_epl_fill_matrix;
 
+typedef enum
+{
+    ec_elp_user_root,
+    ec_elp_user_native,
+    ec_elp_user_anonymous,
+    ec_elp_user_unknown,
+    ec_elp_user_max
+} ec_elp_users;
+
+typedef struct
+{
+    union
+    {
+        int      prefix_text_weight         : 1;
+        int      prefix_text_color          : 4;
+        int      text_weight                : 1;
+        int      text_color                 : 4;
+        int      suffix_text_weight         : 1;
+        int      suffix_text_color          : 4;
+        int      prefix_background_weight   : 1;
+        int      prefix_background_color    : 4;
+        int      background_weight          : 1;
+        int      background_color           : 4;
+        int      suffix_background_weight   : 1;
+        int      suffix_background_color    : 4;
+        string_t prefix[0xFF];
+        string_t suffix[0xFF];
+    } user_profile[ec_elp_user_max];
+} ec_elp_profile;
+
+void ec_elp_reset_profile(ec_elp_profile *ptr);
+
 #ifdef __cplusplus
 }
 #endif
+
+
+
+
+

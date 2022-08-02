@@ -27,6 +27,15 @@ extern "C"
 #ifdef EXOTIC_CANDY_PRIVATE_API
 weak
 #endif
+stime_t ecio_time_now()
+{
+    time_t t = time(0);
+    return *localtime(&t);
+}
+
+#ifdef EXOTIC_CANDY_PRIVATE_API
+weak
+#endif
 void ecio_print_confined_text(const string_t *text, int offset, int maxLen)
 {
     string_t formatStr[0xFF];

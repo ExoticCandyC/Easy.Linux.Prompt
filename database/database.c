@@ -29,6 +29,28 @@ int  ec_epl_max_rows        = -1;
 BOOL ec_epl_auto_matrix     = false;
 BOOL ec_epl_fill_matrix     = false;
 
+void ec_elp_reset_profile(ec_elp_profile *ptr)
+{
+    ec_elp_users index = (ec_elp_users)0;
+    for(; index < ec_elp_user_max; index++)
+    {
+        ptr->user_profile[index].prefix[0]                = '\0';
+        ptr->user_profile[index].prefix_text_weight       = Font_Weight_Normal;
+        ptr->user_profile[index].prefix_text_color        = Color_Name_None;
+        ptr->user_profile[index].text_weight              = Font_Weight_Normal;
+        ptr->user_profile[index].text_color               = Color_Name_None;
+        ptr->user_profile[index].suffix_text_weight       = Font_Weight_Normal;
+        ptr->user_profile[index].suffix_text_color        = Color_Name_None;
+        ptr->user_profile[index].prefix_background_weight = Font_Weight_Normal;
+        ptr->user_profile[index].prefix_background_color  = Color_Name_None;
+        ptr->user_profile[index].background_weight        = Font_Weight_Normal;
+        ptr->user_profile[index].background_color         = Color_Name_None;
+        ptr->user_profile[index].suffix_background_weight = Font_Weight_Normal;
+        ptr->user_profile[index].suffix_background_color  = Color_Name_None;
+        ptr->user_profile[index].suffix[0]                = '\0';
+    }
+}
+
 #ifdef __cplusplus
 }
 #endif

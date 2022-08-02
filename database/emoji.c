@@ -17,32 +17,29 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-
-#pragma once
+#include "emoji.h"
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include <stdio.h>
-#include "Ansi_Sequences.h"
-#include "../compiler.port/Data_Types.h"
+void ec_elp_time_analogue_clock(stime_t time, emoji_t ptr)
+{
+    string_t *clocks[] = {emoji_clocks};
+    time.tm_hour *= 2;
 
-#define terminal_flush()            fflush(stdout)
+    if(time.tm_min <= 45 && time.tm_min >= 15)
+        time.tm_hour += 1;
+    else if(time.tm_min >  45)
+        time.tm_hour += 2;
 
-extern string_t Terminal_Name[];
+    time.tm_hour = time.tm_hour % 24;
 
-void ecio_print_confined_text(const string_t *text, int offset, int maxLen);
+    emojicpy(ptr, clocks[time.tm_hour]);
+}
 
-stime_t ecio_time_now();
-
-void ecpopen(string_t *command, string_t *respond, size_t respond_size);
-BOOL ecio_terminal_supports_utf();
-void ecio_load_tty_name();
-int  ecio_terminal_rows();
-int  ecio_terminal_columns();
-int  ecio_terminal_process_ID();
 
 #ifdef __cplusplus
 }

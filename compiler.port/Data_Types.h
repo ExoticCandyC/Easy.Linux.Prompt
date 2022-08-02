@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -56,6 +56,7 @@ extern "C"
 #define printf_time()            printf_uint8(2,2)  ":" printf_uint8(2,2) ":" printf_uint8(2,2)
 #define printf_timezone()        "%s" printf_uint8(2,2) ":" printf_uint8(2,2)
 #define printf_phonenumber()     "+"  printf_uint64(12,12)
+#define printf_emoji()           printf_string()
 
 #define mask_number(value, mask) \
         (value & mask)
@@ -79,6 +80,8 @@ extern "C"
 
 typedef char string_t;
 
+typedef struct tm stime_t;
+
 typedef string_t * (*pointer_t)();
 
 #define iterator_t(type) type*
@@ -96,6 +99,22 @@ typedef string_t * (*pointer_t)();
         itr++;                              \
         iterator_seek(itr, end, item);      \
     }
+
+typedef enum
+{
+    Color_Name_None,
+    Color_Name_Black,
+    Color_Name_Red,
+    Color_Name_Green,
+    Color_Name_Yellow,
+    Color_Name_Blue,
+    Color_Name_Magenta,
+    Color_Name_Cyan,
+    Color_Name_White
+} Color_Names;
+
+#define Font_Weight_Normal 0
+#define Font_Weight_Bold   1
 
 #ifndef BOOL
 #define BOOL    uint8_t

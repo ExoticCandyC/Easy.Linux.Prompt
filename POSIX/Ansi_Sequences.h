@@ -9,6 +9,7 @@ extern "C"
 #endif
 
 #include <stdlib.h>
+#include "../compiler.port/Data_Types.h"
 
 #define cursor_goto(x, y)            "\033[" #y ";" #x "H"
 #define cursor_goto_variable()       "\033[" printf_uint8(1,1) ";" printf_uint8(1,1) "H"
@@ -73,6 +74,8 @@ extern "C"
 #define color_bg_light_magenta()     "\x1B[45m"
 #define color_bg_light_cyan()        "\x1B[46m"
 #define color_bg_light_white()       "\x1B[47m"
+
+typedef string_t ansi_color_t[sizeof(color_text_magenta())];
 
 #ifdef __cplusplus
 }
