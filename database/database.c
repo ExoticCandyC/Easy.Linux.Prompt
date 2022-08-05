@@ -34,6 +34,7 @@ ec_elp_profile *ec_elp_profiles = EC_NULL;
 void ec_elp_reset_profile(ec_elp_profile *ptr)
 {
     ec_elp_users index = (ec_elp_users)0;
+    ptr->prevOBJ = EC_NULL;
     for(; index < ec_elp_user_max; index++)
     {
         ptr->user_profile[index].prefix[0]                = '\0';
@@ -51,8 +52,40 @@ void ec_elp_reset_profile(ec_elp_profile *ptr)
         ptr->user_profile[index].suffix_background_color  = Color_Name_None;
         ptr->user_profile[index].suffix[0]                = '\0';
     }
+    ptr->nextOBJ = EC_NULL;
+}
+
+void ec_elp_add_new_profile(string_t *profile_name)
+{
+    iterator_t(ec_elp_profile *) itr = ec_elp_profile_begin();
+    iterator_t(ec_elp_profile *) prv = EC_NULL;
+    while(iterator_value(itr) != EC_NULL)
+    {
+        prv = itr;
+        itr = ec_elp_profile_next(itr);
+        if(iterator_value(itr) != EC_NULL)
+            iterator_value(prv)->nextOBJ = itr;
+    }
+        /*itr = (iterator_t(ec_elp_profile *))(&(iterator_value(itr)->nextOBJ));*/
+    if(iterator_value(itr) == EC_NULL)
+    {
+        iterator_value(itr) = malloc(sizeof(ec_elp_profile));
+        ec_elp_reset_profile(iterator_value(itr));
+        strcpy(iterator_value(itr)->profile_name, profile_name);
+        iterator_value(itr)->prevOBJ = prv;
+        /**/
+    }
 }
 
 #ifdef __cplusplus
 }
 #endif
+
+
+
+
+
+
+
+
+

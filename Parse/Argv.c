@@ -58,7 +58,7 @@ const string_t *EPL_ARGV_Descriptions[] =
 #undef ____EPL_ARGV_LIST_TEMP
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 void ecapi_print_help(size_t opt_count,
                       const iterator_t(string_t *) long_opt,
@@ -84,7 +84,7 @@ void ecapi_print_help(size_t opt_count,
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 void ecapi_print_version()
 {
@@ -101,7 +101,7 @@ void ecapi_print_version()
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 size_t ecapi_parse_arg(string_t *argv, const iterator_t(string_t *) long_opt,
                        const iterator_t(string_t *) short_opt, size_t opt_count)
@@ -117,7 +117,7 @@ size_t ecapi_parse_arg(string_t *argv, const iterator_t(string_t *) long_opt,
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 void ecapi_parse_argv(int argc, string_t *argv[])
 {

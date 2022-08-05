@@ -18,6 +18,7 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <string.h>
 #include <time.h>
 #ifndef __linux__
 #error "This project is targeted to be run ONLY on GNU Linux based operating systems."
@@ -37,29 +38,205 @@ extern "C"
 #include "database/database.h"
 #include "database/emoji.h"
 
+#include <ec/vector.h>
+
+ec_api_vector_create(value_tree);
+
+typedef struct
+{
+    int a;
+} the_value_itself;
+
+
+constructor void cons(void)
+{
+}
+
+destructor void dest(void)
+{
+    /*ec_api_vector_delete(value_tree);*/
+}
+
+#include <ec/io.h>
+
+int project_main(int argc, string_t *argv[])
+{
+    size_t max_repond_length = 1024;
+    ec_api_vector_create(respond_list);
+    ec_api_vector_iterator itr;
+    ec_popen_multi_line("ls -l", &respond_list, max_repond_length);
+    ec_api_vector_for_each(itr, respond_list)
+        printf("%s\r\n", ec_api_vector_iterator_pointer(char, itr));
+    ec_api_vector_delete(respond_list);
+    char name[256];
+    ec_io_get_terminal_name(name, sizeof(name));
+    printf("Terminal: .%s.\r\n", name);
+    int test = ec_int_popen("echo \"-123456\"");
+    printf("%d\r\n", test);
+    double testD = ec_double_popen("echo \"-1245.6325\"");
+    printf("%f\r\n", testD);
+
+    emoji_t candy;
+    emoji_t emoji;
+    emojicpy(candy, emoji_candy2);
+    ec_elp_analogue_clock_now(emoji);
+    printf("%s\r\n", emoji);
+
+    int PID = ec_io_get_terminal_PID();
+    printf("PID = %d\r\n", PID);
+    int rows    = ec_io_get_terminal_rows_count();
+    int columns = ec_io_get_terminal_columns_count();
+    printf("Terminal = %d:%d\r\n", columns, rows);
+    ec_io_printf_instant("Terminal = %d:%d\r\n", columns, rows);
+    ec_io_gotoxy(60, 20);
+    ec_io_printf_instant("This is 60:20");
+    ec_io_gotoxy(60, 30);
+    ec_io_printf_instant("This is 60:30");
+    ec_io_gotoxy(80, 20);
+    ec_io_printf_instant("This is 80:20");
+    ec_io_gotoxy(2, 2);
+    ec_io_clear_screen();
+    ec_io_printf_instant("This is 2:2\r\n");
+    return 0;
+
+    ecapi_parse_argv(argc, argv);
+
+
+    return 0;
+}
+
+#ifndef EXOTIC_CANDY_PRIVATE_API
+int main(int argc, string_t *argv[])
+{
+    return project_main(argc, argv);
+}
+#endif
+
+#ifdef v1
+value *temp = EC_NULL;
+
+void alloc(int val)
+{
+    value *all    = malloc(sizeof(value));
+    value *ptr    = temp;
+
+    memset(all, 0, sizeof(value));
+    all->a = val;
+
+    if(temp == EC_NULL)
+        temp = all;
+    else
+    {
+        while(ptr->child != EC_NULL)
+        {
+            ptr = ptr->child;
+        }
+        all->parent = ptr;
+        ptr->child = all;
+    }
+}
+
+value *find_end()
+{
+    value *ptr = temp;
+    if(ptr == EC_NULL)
+        return ptr;
+    while(ptr->child != EC_NULL)
+        ptr = (value *)ptr->child;
+    return ptr;
+}
+
+value collapse_tree()
+{
+    value *ptr = find_end();
+    value *temp;
+    while(ptr != EC_NULL)
+    {
+        temp = ptr;
+        ptr = (value *)ptr->parent;
+        free(temp);
+    }
+}
 
 constructor void before_main(void)
 {
-    printf("size = %d\r\n", (int)sizeof(ec_elp_profiles));
+    alloc(0);
+    return;
+
     printf ("\r\nBefore main()\r\n");
 }
 
 destructor void after_main(void)
 {
-    free(ec_elp_profiles);
-    printf ("\r\nAfter main()\r\n");
+    collapse_tree();
+    return;
+    /*iterator_t(ec_elp_profile *) itr = ec_elp_profile_begin();
+    while(iterator_value(ec_elp_profile_next(itr)) != ec_elp_profile_end())
+        itr = ec_elp_profile_next(itr);
+    while(iterator_value(itr) != ec_elp_profile_end())
+    {
+        printf("profile = " printf_string() end_line(), iterator_value(itr)->profile_name);
+        itr = ec_elp_profile_previous(itr);
+    };
+    printf ("\r\nAfter main()\r\n");*/
 }
 
 int project_main(int argc, string_t *argv[])
 {
+    value *ptr;
+    alloc(1);
+    alloc(2);
+    alloc(3);
+    alloc(4);
+    alloc(5);
+    alloc(6);
+    alloc(7);
+    alloc(8);
+    alloc(9);
+    /*ptr = temp;
+    while(ptr->child != EC_NULL)
+    {
+        printf("a = %d\r\n", ptr->a);
+        ptr = (value *)ptr->child;
+    }
+    printf("a = %d\r\n", ptr->a);
+    */
+    ptr = find_end();
+    while(ptr != EC_NULL)
+    {
+        printf("a = %d\r\n", ptr->a);
+        ptr = (value *)ptr->parent;
+    }
+    ecapi_parse_argv(argc, argv);
+    return 0;
+#ifdef v1
     emoji_t candy;
     emoji_t emoji;
     ecapi_parse_argv(argc, argv);
     ecio_load_tty_name();
-    ec_elp_profiles = (ec_elp_profile *)malloc(sizeof(ec_elp_profiles) * 5);
+
+    ec_elp_add_new_profile("Xprofile 1");
+    ec_elp_add_new_profile("Xprofile 12");
+    ec_elp_add_new_profile("Xprofile 123");
+    ec_elp_add_new_profile("Xprofile 1234");
+    ec_elp_add_new_profile("Xprofile 12345");
+    ec_elp_add_new_profile("Xprofile 123456");
 
     emojicpy(candy, emoji_candy2);
     ec_elp_analogue_clock_now(emoji);
+
+    {
+        iterator_t(ec_elp_profile *) itr = ec_elp_profile_begin();
+        while(iterator_value(itr) != ec_elp_profile_end())
+        {
+            printf("profile = " printf_string() end_line(), iterator_value(itr)->profile_name);
+            itr = ec_elp_profile_next(itr);
+        }
+        /*printf("profile 1 = " printf_string() end_line(), ec_elp_profiles[0].profile_name);
+        printf("profile 2 = " printf_string() end_line(), ((ec_elp_profile *)(ec_elp_profiles->nextOBJ))->profile_name);
+        printf("profile 3 = " printf_string() end_line(), ((ec_elp_profile *)((ec_elp_profile *)(ec_elp_profiles->nextOBJ))->nextOBJ)->profile_name);*/
+    /*printf("profile 2 = " printf_string() end_line(), ec_elp_profiles[0].nextOBJ[0].profile_name);*/
+    }
 
     printf("Time  = " printf_emoji() end_line(), emoji);
     printf("Candy = " printf_emoji() end_line(), candy);
@@ -76,14 +253,8 @@ int project_main(int argc, string_t *argv[])
 
     /*printf("Terminal name: " printf_string() end_line(), Terminal_Name);*/
     return EXIT_SUCCESS;
-}
-
-#ifndef EXOTIC_CANDY_PRIVATE_API
-int main(int argc, string_t *argv[])
-{
-    return project_main(argc, argv);
-}
 #endif
+}
 
 #ifdef __cplusplus
 }
@@ -310,7 +481,7 @@ int project_main()
 
 
 
-
+#endif
 
 
 

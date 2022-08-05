@@ -45,26 +45,38 @@ typedef struct
 {
     union
     {
-        int      prefix_text_weight         : 1;
-        int      prefix_text_color          : 4;
-        int      text_weight                : 1;
-        int      text_color                 : 4;
-        int      suffix_text_weight         : 1;
-        int      suffix_text_color          : 4;
-        int      prefix_background_weight   : 1;
-        int      prefix_background_color    : 4;
-        int      background_weight          : 1;
-        int      background_color           : 4;
-        int      suffix_background_weight   : 1;
-        int      suffix_background_color    : 4;
-        string_t prefix[0xFF];
-        string_t suffix[0xFF];
+        int       prefix_text_weight         : 1;
+        int       prefix_text_color          : 4;
+        int       text_weight                : 1;
+        int       text_color                 : 4;
+        int       suffix_text_weight         : 1;
+        int       suffix_text_color          : 4;
+        int       prefix_background_weight   : 1;
+        int       prefix_background_color    : 4;
+        int       background_weight          : 1;
+        int       background_color           : 4;
+        int       suffix_background_weight   : 1;
+        int       suffix_background_color    : 4;
+        string_t  prefix[0xFF];
+        string_t  suffix[0xFF];
     } user_profile[ec_elp_user_max];
+    string_t  profile_name[0xFF];
+    void     *nextOBJ;
+    void     *prevOBJ;
 } ec_elp_profile;
 
-extern ec_elp_profile *ec_elp_profiles;
+typedef ec_elp_profile *profile_iterator;
+
+extern  iterator_t(ec_elp_profile) ec_elp_profiles;
+
+#define ec_elp_profile_begin()          &ec_elp_profiles
+#define ec_elp_profile_end()            EC_NULL
+#define ec_elp_profile_next(itr)        ((iterator_t(ec_elp_profile *))(&(iterator_value(itr)->nextOBJ)))
+#define ec_elp_profile_previous(itr)    ((iterator_t(ec_elp_profile *))(&(iterator_value(itr)->prevOBJ)))
 
 void ec_elp_reset_profile(ec_elp_profile *ptr);
+
+void ec_elp_add_new_profile(string_t *profile_name);
 
 #ifdef __cplusplus
 }

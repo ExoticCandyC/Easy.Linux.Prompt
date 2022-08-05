@@ -84,7 +84,8 @@ typedef struct tm stime_t;
 
 typedef string_t * (*pointer_t)();
 
-#define iterator_t(type) type*
+#define iterator_t(type)     type*
+#define iterator_value(itr) (*itr)
 
 #define iterator_move_forward(itr, size) itr += size;
 #define iterator_move_back(itr, size)    itr -= size;
@@ -113,7 +114,9 @@ typedef enum
     Color_Name_White
 } Color_Names;
 
+#ifndef EC_NULL
 #define EC_NULL ((void *)0)
+#endif
 
 #define Font_Weight_Normal 0
 #define Font_Weight_Bold   1
@@ -121,6 +124,8 @@ typedef enum
 #ifndef BOOL
 #define BOOL    uint8_t
 #endif
+
+#define reinterpret_cast(type)          (type *)
 
 #ifndef TRUE
 #define TRUE     1

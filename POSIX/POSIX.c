@@ -25,7 +25,7 @@ extern "C"
 #include "POSIX.h"
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 stime_t ecio_time_now()
 {
@@ -34,7 +34,7 @@ stime_t ecio_time_now()
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 void ecio_print_confined_text(const string_t *text, int offset, int maxLen)
 {
@@ -63,12 +63,14 @@ void ecio_print_confined_text(const string_t *text, int offset, int maxLen)
 
 string_t Terminal_Name[0xFF];
 
+#ifdef __linux__
 extern int pclose (FILE *__stream);
 extern FILE *popen (const char *__command, const char *__modes)
   __attribute_malloc__ __attr_dealloc (pclose, 1) __wur;
+#endif
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 void ecpopen(string_t *command, string_t *respond, size_t respond_size)
 {
@@ -100,7 +102,7 @@ BOOL ecio_terminal_supports_utf()
 }
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 int ecio_terminal_rows()
 {
@@ -111,7 +113,7 @@ int ecio_terminal_rows()
 
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 int ecio_terminal_columns()
 {
@@ -122,7 +124,7 @@ int ecio_terminal_columns()
 
 
 #ifdef EXOTIC_CANDY_PRIVATE_API
-weak
+__weak
 #endif
 int ecio_terminal_process_ID()
 {
