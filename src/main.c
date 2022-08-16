@@ -1,7 +1,12 @@
+/* <main.c> -*- C -*- */
 /**
  ** @copyright
- ** This file is part of the "Easy Linux Prompt" project.
+ ** This file is part of the "EC - Easy Linux Promp" project.
  ** Copyright (C) 2022 ExoticCandy
+ ** @email  admin@ecandy.ir
+ **
+ ** Project's home page:
+ ** https://github.com/ExoticCandyC/Easy.Linux.Prompt
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -17,32 +22,18 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-
-#pragma once
+#include <ec/io.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include <stdio.h>
-#include "Ansi_Sequences.h"
-#include "../compiler.port/Data_Types.h"
-
-#define terminal_flush()            fflush(stdout)
-
-extern string_t Terminal_Name[];
-
-void ecio_print_confined_text(const string_t *text, int offset, int maxLen);
-
-stime_t ecio_time_now();
-
-void ecpopen(string_t *command, string_t *respond, size_t respond_size);
-BOOL ecio_terminal_supports_utf();
-void ecio_load_tty_name();
-int  ecio_terminal_rows();
-int  ecio_terminal_columns();
-int  ecio_terminal_process_ID();
+int main()
+{
+    return EXIT_SUCCESS;
+}
 
 #ifdef __cplusplus
 }
